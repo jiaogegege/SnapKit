@@ -1,3 +1,4 @@
+// swift-tools-version:5.0
 //
 //  SnapKit
 //
@@ -21,28 +22,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#if os(iOS) || os(tvOS)
-    import UIKit
-#else
-    import AppKit
-#endif
 
+import PackageDescription
 
-internal enum ConstraintRelation : Int {
-    case equal = 1
-    case lessThanOrEqual
-    case greaterThanOrEqual
-    
-    internal var layoutRelation: LayoutRelation {
-        get {
-            switch(self) {
-            case .equal:
-                return .equal
-            case .lessThanOrEqual:
-                return .lessThanOrEqual
-            case .greaterThanOrEqual:
-                return .greaterThanOrEqual
-            }
-        }
-    }
-}
+let package = Package(
+    name: "SnapKit",
+    platforms: [
+        .iOS(.v10),
+        .macOS(.v10_12),
+        .tvOS(.v10)
+    ],
+    products: [
+        .library(name: "SnapKit", targets: ["SnapKit"]),
+    ],
+    targets: [
+        .target(name: "SnapKit", path: "Source"),
+        .testTarget(name: "SnapKitTests", dependencies: ["SnapKit"]),
+    ],
+    swiftLanguageVersions: [
+        .v5
+    ]
+)
